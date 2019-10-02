@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<configuration>
+	<placeholders>
+		<placeholder id="template_name">SAP S/4HANA to Salesforce Product Migration</placeholder>
+	</placeholders>
+	<sections>
+		<section id="use_case">
+This Anypoint template serves as a foundation for setting an online sync of products from SAP S/4HANA to Salesforce.
+
+Use this template if would like to sync products from SAP S/4HANA to Salesforce in manner of one time synchronization by browse toting the HTTP endpoint. The template will fetch all products by specified criteria and send it as to Salesforce to create/update products there.
+Requirements have been set not only to be used as examples, but also to establish a starting point to adapt your integration to your requirements.
+
+As implemented, this template leverages the Mule batch module.
+The batch job is divided into *Process* and *On Complete* stages.
+The integration is triggered by the HTTP endpoint to fetch all the SAP S/4HANA Products suitable for migration.
+Fetched products are passed to the batch as input. In the batch the product is fetched from Salesforce by its product code.
+If it exists, its product identifier is resolved against Salesforce. If it doesn't exist, then new product number is fetched from Salesforce.
+Afterwards every such product from SAP S/4HANA is sent to Salesforce where it is asynchronously updated or created.
+Finally during the *On Complete* stage the template logs output statistics data into the console and send a notification e-mail with the results of the batch execution.
+	</section>
+		<section id="considerations">
+​To make this template run, there are certain preconditions that must be considered. All of them deal with the preparations in both, that must be made for the template to run smoothly.
+**Failing to do so could lead to unexpected behavior of the template.**
+
+Before using this template, you may want to check out this [Documentation Page](https://docs.mulesoft.com/connectors/sap/sap-s4hana-cloud-connector), that will teach you how to work
+with SAP S/4HANA and Anypoint Studio.
+		</section>
+		<section id="running_on_studio">
+After you import your template into Anypoint Studio, follow these steps to run it:
+
++ Locate the properties file `mule.dev.properties`, in src/main/resources.
++ Complete all the properties required as per the examples in the "Properties to Configure" section.
++ Right click the template project folder.
++ Hover your mouse over `Run as`.
++ Click `Mule Application (configure)`.
++ Inside the dialog, select Environment and set the variable `mule.env` to the value `dev`.
++ Click `Run`.
+
+In order to make this template run on Anypoint Studio there are a few extra steps that needs to be made.
+Please check this Documentation Page:
+
++ [Enabling Your Studio Project for SAP S/4HANA](https://docs.mulesoft.com/connectors/sap/sap-s4hana-cloud-connector)	
+		</section>
+		<section id="s4hana_src">
+
+There are no considerations with using a SAP S/4HANA as a data origin.
+		</section>
+		<section id="sfdc_dst">
+		
+Here's what you need to know about Salesforce to get this template to work.
+		</section>
+		<section id="application_configuration">
+**Application Configuration**
++ http.port `9090`
++ page.size `1000`
++ aggregator.size=`10`
+
+**Watermarking Default Last Query Timestamp e.g. 2019-12-13T03:00:59**
++ watermark.default.expression=`2019-09-20T00:00:59`
+
+**SalesForce Connector Configuration**
+
++ sfdc.username `bob.dylan@sfdc`
++ sfdc.password `DylanPassword123`
++ sfdc.securityToken `avsfwCUl7apQs56Xq2AKi3X`
+
+**SAP S/4HANA Connector Configuration**
+
++ s4hana.baseUrl `your.s4hana.address.com`
++ s4hana.username `your.s4hana.username`
++ s4hana.password `your.s4hana.password`
+
+**SMTP Services Configuration**
+
++ smtp.host `smtp.gmail.com`
++ smtp.port `587`
++ smtp.user `email@example.com`
++ smtp.password `password`
+
+**Email Details**
+
++ mail.from `batch.migrateProducts.migration@mulesoft.com`
++ mail.to `your@email.com`
++ mail.subject `Batch Job Finished Report`
+​
+		</section>
+		<section id="api_calls">
+		
+There are no particular considerations for this template regarding API calls
+		</section>
+		<section id="default_business_logic_xml">
+		<![CDATA[
+Functional aspect of the template is implemented on this XML, directed by one flow responsible of executing the logic.
+For the purpose of this particular template the *mainFlow* just executes the Batch Job which handles all the logic of it.
+This flow has Error Handling that basically consists on invoking the *On Error Propagate Component* defined in *errorHandling.xml* file.
+]]>
+		</section>
+	</sections>
+</configuration>
