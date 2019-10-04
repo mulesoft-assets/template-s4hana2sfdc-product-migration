@@ -11,7 +11,7 @@ This template is subject to the conditions of the <a href="https://s3.amazonaws.
 <!-- Use Case (start) -->
 This Anypoint template serves as a foundation for setting an online sync of products from SAP S/4HANA to Salesforce.
 
-Use this template if would like to sync products from SAP S/4HANA to Salesforce in manner of one time synchronization by browse toting the HTTP endpoint. The template will fetch all products by specified criteria and send it as to Salesforce to create/update products there.
+Use this template if would like to sync products from SAP S/4HANA to Salesforce in manner of one time synchronization by browse toting the HTTP endpoint. The template will fetch all products by specified criteria and send it to Salesforce to create/update products there.
 Requirements have been set not only to be used as examples, but also to establish a starting point to adapt your integration to your requirements.
 
 As implemented, this template leverages the Mule batch module.
